@@ -24,11 +24,19 @@ def opcion1():
         print("3. Actualizar")
         print("4. Salir")
 
+        while True:
 
-        op = int(input("ingres opcion "))
+            try:
+
+
+                op = int(input("ingres opcion "))
+                break
+            except ValueError:
+                            print("La edad debe ser un valor numérico.")
 
         if op == 1:
                     
+                try:
                     conn = psycopg2.connect(
                         dbname='estudiantes',
                         user='postgres',
@@ -37,47 +45,74 @@ def opcion1():
                         port='5432'
                     )
                     cur = conn.cursor()
-            
-                    nombre = input("Ingrese su nombre : ")
-                    edad = int(input("Ingrese su edad : "))
 
-                    genero = input("ingrese su e¿genero : ")
-                    direccion = input("Ingrese su direccion: ")
+
+                    while True:
+                                
+                            
+
+                            nombre = input("Ingrese su nombre: ")
+                            if nombre.isalpha():
+                                 break
+                            else:
+                                 print("Deber debe ser caracter ")
+
+
+                    while True:
+                        try:
+                            edad = int(input("Ingrese su edad: "))
+                            break
+                        except ValueError:
+                            print("La edad debe ser un valor numérico.")
+
+
+
+
+                    while True:
+                             genero = input("Ingrese su género: ")
+                             if genero.isalpha():
+                                  
+                                  break
+                             else:
+                                  print("Debe ser caracter ")
+                    direccion = input("Ingrese su dirección: ")
+
                     try:
-                                # Preparar la instrucción SQL para la inserción
-                                    Ins1 = 'INSERT INTO datos (nombre,edad,genero,direccion) VALUES (%s,%s,%s,%s);'  # %s es un marcador de posición para el valor
-                                    
-                                    
-                                    Instruccion = cur.mogrify(Ins1, (nombre,edad,genero,direccion))
+                        Ins1 = 'INSERT INTO datos (nombre,edad,genero,direccion) VALUES (%s,%s,%s,%s);'
+                        Instruccion = cur.mogrify(Ins1, (nombre, edad, genero, direccion))
 
-                                    # Ejecutar la instrucción SQL
-                                    cur.execute(Instruccion)
-
-                                    # Confirmar la transacción
-                                    conn.commit()
+                        cur.execute(Instruccion)
+                        conn.commit()
 
                     except psycopg2.Error as e:
-                                print(f"Error durante la conexión a la DB. Consulte el error: {e}")
+                        print(f"Error durante la conexión a la DB. Consulte el error: {e}")
 
                     finally:
-                            # Cerrar el cursor y la conexión
-                                cur.close()
-                                conn.close()
+                        cur.close()
+                        conn.close()
+
+                except psycopg2.Error as e:
+                    print(f"Error de conexión a la DB. Consulte el error: {e}")
             
         elif op == 2:
             try:
                 # Establecer la conexión a la base de datos
                 conn = psycopg2.connect(
-                        dbname='estudiantes',
-                        user='postgres',
-                        password='1234',
-                        host='localhost',
-                        port='5432'
-                    )
+                    dbname='estudiantes',
+                    user='postgres',
+                    password='1234',
+                    host='localhost',
+                    port='5432'
+                )
                 cur = conn.cursor()
 
                 # Obtener el nombre para identificar el registro a eliminar
-                nombre_a_eliminar = input("Ingrese el nombre a eliminar: ")
+                while True:
+                    nombre_a_eliminar = input("Ingrese el nombre a eliminar: ")
+                    if nombre_a_eliminar.isalpha():
+                        break
+                    else:
+                        print("El nombre debe contener solo caracteres.")
 
                 # Construir y ejecutar la sentencia DELETE
                 sentencia_delete = "DELETE FROM datos WHERE nombre = %s;"
@@ -107,7 +142,18 @@ def opcion1():
 
             try:
                 # Solicitar al usuario el nombre del producto
-                nombre_estudiante = input("Ingrese el nombre del estuante que desea actualizar: ")
+
+
+                while True:
+                        
+
+                        nombre_estudiante = input("Ingrese el nombre del estuante que desea actualizar: ")
+
+                        if nombre_estudiante.isalpha():
+                             break
+                        
+                        else:
+                         print("El nombre debe contener solo caracteres.") 
 
                 # Verificar si el producto existe antes de continuar
                 cur.execute("SELECT COUNT(*) FROM datos WHERE nombre = %s;", (nombre_estudiante,))
@@ -117,7 +163,20 @@ def opcion1():
                     print(f"No se encontró ningún estudiante con el nombre '{nombre_estudiante}'.")
                 else:
                     # Solicitar al usuario los nuevos valores
-                    nuevo_edad = (input("Ingrese la nueva edad: "))
+
+
+
+                    while True:
+
+                        try:
+                            nuevo_edad = int(input("Ingrese la nueva edad: "))
+                            break
+                        except ValueError:
+                            print("La edad debe ser un valor numérico.")
+                            
+
+
+
                     nueva_genero = (input("Ingrese el nuevo genero: "))
                     nuevo_direccion = (input("Ingrese una nueva direccion: "))
                     
@@ -167,8 +226,13 @@ def opcion2():
         print("3. Actualizar")
         print("4. Salir")
 
-
-        op = int(input("ingres opcion "))
+        while True:
+             
+            try:
+             op = int(input("ingres opcion "))
+             break
+            except ValueError:
+                 print("Debe ser numerico la opcion")
 
         if op == 1:
             conn = psycopg2.connect(
@@ -179,9 +243,40 @@ def opcion2():
                 port='5432'
             )
             cur = conn.cursor()
-            nombre_gasto= input("nombre del gasto : ")
-            gasto = float(input("ingrese cantidad de gasto: "))
-            presupuesto = float(input("ingrese su presupuesto actual : "))
+
+            while True:
+                        
+
+                    nombre_gasto= input("nombre del gasto : ")
+                    if nombre_gasto.isalpha():
+                         
+                         break
+                    else:
+                         
+                         print("Deber ser caracter")
+
+
+
+            while True:
+                     
+                try:
+
+                     gasto = float(input("ingrese cantidad de gasto: "))
+
+                     break
+                except ValueError:
+                     
+                     print("Deber ser numerico ")
+
+
+            while True:
+
+                try:
+                     presupuesto = float(input("ingrese su presupuesto actual : "))
+                     break
+                except ValueError:
+                     
+                     print("Debe ser numerico ")
             try:
                         # Preparar la instrucción SQL para la inserción
                             Ins1 = 'INSERT INTO gasto1 (nombregasto,cantidad,presupuesto) VALUES (%s,%s,%s);'  # %s es un marcador de posición para el valor
@@ -247,7 +342,16 @@ def opcion2():
 
             try:
                 # Solicitar al usuario el nombre del producto
-                nombre_gasto= input("Ingrese el nombre del gasto que desea actualizar: ")
+
+                while True:
+                         
+                    
+                         nombre_gasto= input("Ingrese el nombre del gasto que desea actualizar: ")
+                         if nombre_gasto.isalpha():
+                              
+                              break
+                         else:
+                              print("Deber ser caracter")
 
                 # Verificar si el producto existe antes de continuar
                 cur.execute("SELECT COUNT(*) FROM gasto1 WHERE nombregasto = %s;", (nombre_gasto,))
@@ -257,9 +361,15 @@ def opcion2():
                     print(f"No se encontró ningún gasto con el nombre '{nombre_gasto}'.")
                 else:
                     # Solicitar al usuario los nuevos valores
-                    nuevo_cantidad = int(input("Ingrese la nueva cantidad: "))
-                    nueva_presupuesto = int(input("Ingrese el nuevo presupesuto: "))
-                    
+                       
+                    while True:
+                            try:
+                                nuevo_cantidad = int(input("Ingrese la nueva cantidad: "))
+                                nueva_presupuesto = int(input("Ingrese el nuevo presupesuto: "))
+                                break
+                            except ValueError:
+                                 
+                                 print("Deber ser valor numerico ")
                     
                     # Sentencia SQL de actualización
                     sql_actualizacion = """
@@ -300,8 +410,14 @@ def opcion3():
         print("3. Actualizar")
         print("4. Salir")
 
+        while True:
+                 
 
-        op = int(input("ingres opcion "))
+            try:
+                 op = int(input("ingres opcion "))
+                 break
+            except ValueError:
+                 print("Deber ser numerico la opcion ")
 
         if op == 1:
 
@@ -434,8 +550,15 @@ def opcion4():
         print("3. Actualizar")
         print("4. Salir")
 
+        while True:
+                try:
+                     op = int(input("ingres opcion "))
+                     break
+                except ValueError:
+                     
+                     print("Deber ser numerico la opcion ")
 
-        op = int(input("ingres opcion "))
+                
 
         if op == 1:
             conn = psycopg2.connect(
@@ -568,7 +691,13 @@ def opcion5():
         print("5. Salir")
 
 
-        op = int(input("ingres opcion : "))
+        while True:
+                try:
+                     op = int(input("ingres opcion "))
+                     break
+                except ValueError:
+                     
+                     print("Deber ser numerico la opcion ")
 
         if op == 1:
             conn = psycopg2.connect(
@@ -733,7 +862,13 @@ def opcion6():
         print("6. Salir")
 
 
-        op = int(input("ingres opcion : "))
+        while True:
+                try:
+                     op = int(input("ingres opcion "))
+                     break
+                except ValueError:
+                     
+                     print("Deber ser numerico la opcion ")
         
         if op == 1:
 
@@ -981,8 +1116,12 @@ def opcion7():
 
     
         while True: 
-
-            buscar = input("Buscar Gusto : ")
+            while True:
+                      buscar = input("Buscar Gusto : ")
+                      if buscar.isalpha():
+                           break
+                      else:
+                           print("Deber ser caracter ")
 
              
             if buscar == "accion":
@@ -1076,7 +1215,13 @@ def opcion8():
         print("5. Salir")
 
 
-        op = int(input("ingres opcion : "))
+        while True:
+                try:
+                     op = int(input("ingres opcion "))
+                     break
+                except ValueError:
+                     
+                     print("Deber ser numerico la opcion ")
         
         
 
@@ -1249,7 +1394,13 @@ def opcion9():
         print("5. Salir")
 
 
-        op = int(input("ingres opcion "))
+        while True:
+                try:
+                     op = int(input("ingres opcion "))
+                     break
+                except ValueError:
+                     
+                     print("Deber ser numerico la opcion ")
 
         if op == 1:
             nombre = input("Ingrese su producto : ")
@@ -1425,8 +1576,14 @@ def opcion10():
 
 
       while True: 
+            
 
-            buscar = input("Informacion del producto  : ")
+            while True:
+                      buscar = input("Informacion del producto  : ")
+                      if buscar.isalpha():
+                           break
+                      else:
+                           print("Debe ser carcter ")
 
              
             if buscar == "block":
@@ -1481,7 +1638,13 @@ def opcion11():
         
 
 
-        op = int(input("ingres opcion : "))
+        while True:
+                try:
+                     op = int(input("ingres opcion "))
+                     break
+                except ValueError:
+                     
+                     print("Deber ser numerico la opcion ")
 
         if op == 1:
             conn = psycopg2.connect(
@@ -1602,7 +1765,13 @@ def opcion12():
         
         
 
-        op = int(input("ingres opcion : "))
+        while True:
+                try:
+                     op = int(input("ingres opcion "))
+                     break
+                except ValueError:
+                     
+                     print("Deber ser numerico la opcion ")
 
         if op == 1:
              
@@ -1691,8 +1860,13 @@ while True:
     print("12. Concurso")
     print("13. Salir")
 
-    
-    seleccion = int(input("ingrese una opcion : "))
+    while True:
+               
+            try:
+               seleccion = int(input("ingrese una opcion : "))
+               break
+            except ValueError:
+                 print("Debe ser valor numerico ")
 
     if seleccion == 1:
 
