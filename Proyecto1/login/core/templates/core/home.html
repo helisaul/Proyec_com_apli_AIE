@@ -1,0 +1,17 @@
+{% extends 'core/base.html' %}
+{% block content %}
+
+
+
+
+<hr>
+
+{% if request.user.is_authenticated %}
+
+{% else%}
+
+
+
+{% endif %}
+
+{% endblock %}
