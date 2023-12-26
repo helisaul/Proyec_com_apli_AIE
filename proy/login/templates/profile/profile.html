@@ -44,6 +44,12 @@
                         {% csrf_token %}
                         <button class="btn btn-lg btn-success" type="submit">Cerrar sesión</button>
                     </form>
+                    <br>
+                    {% if request.user.username == 'heli' %}
+                    <a class="btn btn-lg btn-warning" href="{% url 'admin:index' %}">Administrador</a>
+
+
+                    {% endif %}
                     </div>
                   </div>
           

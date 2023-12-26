@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'crispy_forms',
     'crispy_bootstrap5',
     'django.contrib.admin',

@@ -2,6 +2,8 @@ from django.contrib import admin
 from .models import Course , Registration, Mark
 
 
+
+
 class CourseAdmin(admin.ModelAdmin):
 
     list_display= ('name','teacher','class_quantity')
